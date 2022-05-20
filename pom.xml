@@ -129,6 +129,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <lombok.version>1.16.20</lombok.version>
         <selenium.version>4.1.4</selenium.version>
+        <logback.version>1.2.11</logback.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <jupiter.version>5.8.2</jupiter.version>
     </properties>
 
     <dependencies>
@@ -145,8 +148,31 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>${jupiter.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 
