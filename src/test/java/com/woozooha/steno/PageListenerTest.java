@@ -2,6 +2,7 @@ package com.woozooha.steno;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,11 @@ import org.openqa.selenium.support.events.EventFiringDecorator;
 class PageListenerTest {
 
     WebDriver driver;
+
+    @BeforeAll
+    static void beforeAll() {
+        Steno steno = new Steno();
+    }
 
     @BeforeEach
     void beforeEach() {
