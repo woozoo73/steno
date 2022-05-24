@@ -37,11 +37,8 @@ class StenoTest {
 
     @Test
     void get() {
-        driver.get("https://www.wikipedia.org");
         IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
-
         ResultPage resultPage = indexPage.search("Selenium (software)");
-
         resultPage.getFirstHeading();
         resultPage.getSiteSub();
     }

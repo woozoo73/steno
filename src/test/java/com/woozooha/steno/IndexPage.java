@@ -23,18 +23,17 @@ public class IndexPage {
 
     public IndexPage(WebDriver driver) {
         this.driver = driver;
+
+        driver.get("https://www.wikipedia.org");
     }
 
     public ResultPage search(String input) {
-        driver.get("https://www.wikipedia.org");
-        IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
+        searchInput.sendKeys(input);
 
-        indexPage.getSearchInput().sendKeys(input);
-
-        Select languages = new Select(indexPage.getSearchLanguage());
+        Select languages = new Select(searchLanguage);
         languages.selectByVisibleText("English");
 
-        indexPage.getSearchButton().submit();
+        searchButton.submit();
 
         return PageFactory.initElements(driver, ResultPage.class);
     }
