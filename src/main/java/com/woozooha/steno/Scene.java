@@ -1,5 +1,6 @@
 package com.woozooha.steno;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 public class Scene {
 
+    @JsonIgnore
     private Long id;
 
     private Class<?> pageClass;
@@ -24,14 +26,17 @@ public class Scene {
         this.id = id;
     }
 
+    @JsonIgnore
     public String getDataFilename() {
         return String.format("scene-%d.json", id);
     }
 
+    @JsonIgnore
     public String getScreenshotFilename() {
         return String.format("scene-%d.png", id);
     }
 
+    @JsonIgnore
     public String getPageSourceFilename() {
         return String.format("scene-%d.html", id);
     }

@@ -22,10 +22,14 @@ public class Story {
 
     private String id;
 
+    @JsonIgnore
     private String date;
+    @JsonIgnore
     private String time;
+    @JsonIgnore
     private String uuid;
 
+    @JsonIgnore
     private Long sceneId = 0L;
 
     @JsonIgnore
@@ -55,6 +59,7 @@ public class Story {
         return scenes.get(scenes.size() - 1);
     }
 
+    @JsonIgnore
     public String getDataFilename() {
         return String.format("%s.json", id);
     }

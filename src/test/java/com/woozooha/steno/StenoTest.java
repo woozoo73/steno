@@ -30,7 +30,7 @@ class StenoTest {
 
     @AfterEach
     void afterEach() {
-        Steno.stop(driver);
+        Steno.end(driver);
 
         driver.quit();
     }
@@ -40,9 +40,10 @@ class StenoTest {
         driver.get("https://www.wikipedia.org");
         IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
 
-        indexPage.getSearchInput().sendKeys("abcd");
+        ResultPage resultPage = indexPage.search("Selenium (software)");
 
-        log.info("IndexPage={}", indexPage);
+        resultPage.getFirstHeading();
+        resultPage.getSiteSub();
     }
 
 }

@@ -43,16 +43,16 @@ public class Steno {
     public static Steno start(WebDriver driver) {
         Steno steno = new Steno(driver);
         STENO.set(steno);
-
         LISTEN.set(Boolean.TRUE);
 
         return steno;
     }
 
-    public static void stop(WebDriver driver) {
+    public static void end(WebDriver driver) {
         ContextUtils.saveStory();
 
         LISTEN.set(Boolean.FALSE);
+        STENO.remove();
     }
 
     public static Steno currentSteno() {
