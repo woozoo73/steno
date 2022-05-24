@@ -28,9 +28,9 @@ class StenoTest {
 
     @AfterEach
     void afterEach() {
-        driver.quit();
-
         steno.stop(driver);
+
+        driver.quit();
     }
 
     @Test

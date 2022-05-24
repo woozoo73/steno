@@ -26,7 +26,6 @@ public class Story {
     private String time;
     private String uuid;
 
-    private Long pageId = 0L;
     private Long sceneId = 0L;
 
     @JsonIgnore

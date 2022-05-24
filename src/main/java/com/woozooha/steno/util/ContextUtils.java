@@ -84,7 +84,9 @@ public abstract class ContextUtils {
 
         Element element = new Element();
         element.setRect(webElement.getRect());
-        element.setBy(by);
+        if (by != null) {
+            element.setBy(by.toString());
+        }
 
         scene.getElements().add(element);
 

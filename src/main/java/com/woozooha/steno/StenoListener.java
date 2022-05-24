@@ -80,7 +80,7 @@ public class StenoListener implements WebDriverListener {
     public void afterFindElement(WebDriver driver, By locator, WebElement result) {
         log.info("afterFindElement");
 
-        ContextUtils.addElement(result);
+        ContextUtils.addElement(result, locator);
     }
 
     public void beforeFindElements(WebDriver driver, By locator) {
@@ -90,7 +90,7 @@ public class StenoListener implements WebDriverListener {
     public void afterFindElements(WebDriver driver, By locator, List<WebElement> result) {
         log.info("afterFindElements");
 
-        result.stream().forEach(ContextUtils::addElement);
+        result.stream().forEach(r -> ContextUtils.addElement(r, locator));
     }
 
     public void beforeGetPageSource(WebDriver driver) {
