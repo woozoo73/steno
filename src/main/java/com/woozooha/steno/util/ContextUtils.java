@@ -98,9 +98,9 @@ public abstract class ContextUtils {
     }
 
     public static void saveScene() {
-        Steno.listen(false);
-
         try {
+            Steno.listen(false);
+
             saveSceneData();
             saveScreenshot();
             saveSource();

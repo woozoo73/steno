@@ -19,6 +19,7 @@ public class StenoListener implements WebDriverListener {
 
     public void beforeAnyCall(Object target, Method method, Object[] args) {
         log.info("beforeAnyCall");
+        log.info("target={}, method={}, args={}", target, method, args);
 
         if (!Steno.listen()) {
             return;
@@ -29,6 +30,7 @@ public class StenoListener implements WebDriverListener {
 
     public void afterAnyCall(Object target, Method method, Object[] args, Object result) {
         log.info("afterAnyCall");
+        log.info("target={}, method={}, args={}", target, method, args);
 
         if (!Steno.listen()) {
             return;
