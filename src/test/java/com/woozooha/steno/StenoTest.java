@@ -9,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 
+import java.time.Duration;
+
 @Slf4j
 class StenoTest {
 
@@ -22,6 +24,8 @@ class StenoTest {
         WebDriver origin = new ChromeDriver();
         StenoListener listener = new StenoListener();
         driver = new EventFiringDecorator(listener).decorate(origin);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        driver.manage().window().maximize();
 
         Steno.start(driver);
     }

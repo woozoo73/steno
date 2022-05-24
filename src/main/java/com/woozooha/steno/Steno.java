@@ -26,7 +26,7 @@ public class Steno {
 
     static {
         objectMapper = new ObjectMapper();
-        LISTEN.set(Boolean.TRUE);
+        LISTEN.set(Boolean.FALSE);
     }
 
     @Getter
@@ -44,13 +44,15 @@ public class Steno {
         Steno steno = new Steno(driver);
         STENO.set(steno);
 
+        LISTEN.set(Boolean.TRUE);
+
         return steno;
     }
 
     public static void stop(WebDriver driver) {
         ContextUtils.saveStory();
 
-        STENO.remove();
+        LISTEN.set(Boolean.FALSE);
     }
 
     public static Steno currentSteno() {
