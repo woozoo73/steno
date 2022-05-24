@@ -16,8 +16,6 @@ class StenoTest {
 
     WebDriver driver;
 
-    Steno steno;
-
     @BeforeEach
     void beforeEach() {
         System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver");
@@ -32,7 +30,7 @@ class StenoTest {
 
     @AfterEach
     void afterEach() {
-        steno.stop(driver);
+        Steno.stop(driver);
 
         driver.quit();
     }
