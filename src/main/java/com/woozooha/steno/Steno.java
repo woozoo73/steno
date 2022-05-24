@@ -1,9 +1,14 @@
 package com.woozooha.steno;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.woozooha.steno.replace.PageFactoryInterceptor;
+import com.woozooha.steno.util.ContextUtils;
+import lombok.Getter;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 
@@ -12,22 +17,60 @@ import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
 
 public class Steno {
 
-    private String uuid;
+    private static final ThreadLocal<Steno> STENO = new ThreadLocal<>();
 
-    public Steno() {
+    private static final ThreadLocal<Boolean> LISTEN = new ThreadLocal<>();
+
+    @Getter
+    private static ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        LISTEN.set(Boolean.TRUE);
+    }
+
+    @Getter
+    private Story story;
+
+    @Getter
+    private WebDriver driver;
+
+    public Steno(WebDriver driver) {
+        this.driver = driver;
         init();
     }
 
-    public void init() {
-        initContext();
+    public static Steno start(WebDriver driver) {
+        Steno steno = new Steno(driver);
+        STENO.set(steno);
+
+        return steno;
+    }
+
+    public static void stop(WebDriver driver) {
+        ContextUtils.saveStory();
+
+        STENO.remove();
+    }
+
+    public static Steno currentSteno() {
+        return STENO.get();
+    }
+
+    public static Boolean listen() {
+        return LISTEN.get();
+    }
+
+    public static void listen(Boolean status) {
+        LISTEN.set(status);
+    }
+
+    protected void init() {
         initInterceptor();
+        initStory();
     }
 
-    public void initContext() {
-
-    }
-
-    public void initInterceptor() {
+    protected void initInterceptor() {
         ByteBuddyAgent.install();
         new ByteBuddy()
                 .redefine(PageFactory.class)
@@ -37,6 +80,10 @@ public class Steno {
                 .load(
                         PageFactory.class.getClassLoader(),
                         ClassReloadingStrategy.fromInstalledAgent());
+    }
+
+    protected void initStory() {
+        story = new Story();
     }
 
 }
