@@ -2,20 +2,24 @@ package com.woozooha.steno.replace;
 
 import com.woozooha.steno.util.ContextUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 @Slf4j
 public class PageFactoryInterceptor {
 
-    public static void initElements(ElementLocatorFactory factory, Object page) {
+    public static void initElements(SearchContext searchContext, Object page) {
         beforeInitElements(page);
 
-        PageFactory.initElements((FieldDecorator) (new DefaultFieldDecorator(factory)), (Object) page);
+        initElements((ElementLocatorFactory) (new StenoElementLocatorFactory(searchContext)), (Object) page);
 
         afterInitElements(page);
+    }
+
+    public static void initElements(ElementLocatorFactory factory, Object page) {
+        PageFactory.initElements((FieldDecorator) (new StenoFieldDecorator(factory)), (Object) page);
     }
 
     public static void beforeInitElements(Object page) {

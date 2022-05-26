@@ -12,4 +12,6 @@ public class Element {
 
     private String by;
 
+    private String fieldName;
+
 }

@@ -39,8 +39,12 @@ class StenoTest {
     void get() {
         IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
         ResultPage resultPage = indexPage.search("Selenium (software)");
-        resultPage.getFirstHeading();
-        resultPage.getSiteSub();
+
+        String firstHeading = resultPage.getFirstHeading();
+        String siteSub = resultPage.getSiteSub();
+
+        log.info("firstHeading={}", firstHeading);
+        log.info("siteSub={}", siteSub);
     }
 
 }

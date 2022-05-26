@@ -73,6 +73,10 @@ public abstract class ContextUtils {
     }
 
     public static Element addElement(WebElement webElement, By by) {
+        return addElement(webElement, by, null);
+    }
+
+    public static Element addElement(WebElement webElement, By by, String fieldName) {
         if (webElement == null) {
             return null;
         }
@@ -82,10 +86,22 @@ public abstract class ContextUtils {
             return null;
         }
 
+        if (fieldName != null) {
+            boolean alreadyAdded = scene.getElements().stream()
+                    .filter(e -> fieldName.equals(e.getFieldName()))
+                    .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
+            if (alreadyAdded) {
+                return null;
+            }
+        }
+
         Element element = new Element();
         element.setRect(webElement.getRect());
         if (by != null) {
             element.setBy(by.toString());
+        }
+        if (fieldName != null) {
+            element.setFieldName(fieldName);
         }
 
         scene.getElements().add(element);
