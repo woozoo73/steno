@@ -13,13 +13,9 @@ public class PageFactoryInterceptor {
     public static void initElements(SearchContext searchContext, Object page) {
         beforeInitElements(page);
 
-        initElements((ElementLocatorFactory) (new StenoElementLocatorFactory(searchContext)), (Object) page);
+        PageFactory.initElements((ElementLocatorFactory) (new StenoElementLocatorFactory(searchContext)), (Object) page);
 
         afterInitElements(page);
-    }
-
-    public static void initElements(ElementLocatorFactory factory, Object page) {
-        PageFactory.initElements((FieldDecorator) (new StenoFieldDecorator(factory)), (Object) page);
     }
 
     public static void beforeInitElements(Object page) {

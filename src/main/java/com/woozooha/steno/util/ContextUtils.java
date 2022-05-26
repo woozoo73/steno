@@ -2,10 +2,10 @@ package com.woozooha.steno.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
-import com.woozooha.steno.Element;
-import com.woozooha.steno.Scene;
+import com.woozooha.steno.model.Element;
+import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.Steno;
-import com.woozooha.steno.Story;
+import com.woozooha.steno.model.Story;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.openqa.selenium.*;

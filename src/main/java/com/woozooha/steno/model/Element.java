@@ -1,4 +1,4 @@
-package com.woozooha.steno;
+package com.woozooha.steno.model;
 
 import lombok.Getter;
 import lombok.Setter;

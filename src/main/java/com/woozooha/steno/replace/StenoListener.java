@@ -1,5 +1,6 @@
-package com.woozooha.steno;
+package com.woozooha.steno.replace;
 
+import com.woozooha.steno.Steno;
 import com.woozooha.steno.util.ContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
