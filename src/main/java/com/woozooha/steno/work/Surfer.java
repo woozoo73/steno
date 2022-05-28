@@ -1,8 +1,8 @@
 package com.woozooha.steno.work;
 
-public abstract class Rover {
+public abstract class Surfer {
 
-    public Report play() {
+    public Record play() {
         return null;
     }
 

@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class Report {
+public class Record {
 
     @JsonIgnore
-    private Class<? extends Rover> roverClass;
+    private Class<? extends Surfer> surferClass;
 
-    private String rover;
+    private String surfer;
 
     private LocalDateTime start;
 
