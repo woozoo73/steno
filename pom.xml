@@ -131,7 +131,7 @@
         <selenium.version>4.1.4</selenium.version>
         <logback.version>1.2.11</logback.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <jupiter.version>5.8.2</jupiter.version>
+        <jupiter.version>5.9.0-M1</jupiter.version>
         <bytebuddy.version>1.12.10</bytebuddy.version>
         <jackson.version>2.13.3</jackson.version>
     </properties>
@@ -151,7 +151,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${jupiter.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

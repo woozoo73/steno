@@ -49,7 +49,7 @@ public class Steno {
         return steno;
     }
 
-    public static void end(WebDriver driver) {
+    public static void end() {
         ContextUtils.saveStory();
 
         LISTEN.set(Boolean.FALSE);
@@ -75,7 +75,8 @@ public class Steno {
 
     protected void initInterceptor() {
         ByteBuddyAgent.install();
-        new ByteBuddy()
+        ByteBuddy byteBuddy = new ByteBuddy();
+        byteBuddy
                 .redefine(PageFactory.class)
                 .method(named("initElements").and(takesArguments(SearchContext.class, Object.class)))
                 .intercept(MethodDelegation.to(PageFactoryInterceptor.class))
@@ -83,6 +84,7 @@ public class Steno {
                 .load(
                         PageFactory.class.getClassLoader(),
                         ClassReloadingStrategy.fromInstalledAgent());
+        // FIXME: ResettableClassFileTransformer reset
     }
 
     protected void initStory() {
