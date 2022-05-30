@@ -1,9 +1,8 @@
 package com.woozooha.steno;
 
 import com.woozooha.steno.test.StenoExtension;
-import com.woozooha.steno.test.StenoWebDriver;
 import com.woozooha.steno.test.StenoTest;
-import com.woozooha.steno.util.ContextUtils;
+import com.woozooha.steno.test.StenoWebDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
