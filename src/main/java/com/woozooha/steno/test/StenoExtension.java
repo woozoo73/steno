@@ -96,7 +96,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
                     methods.add(method);
                 }
             }
-            // if exist break.
+            // Exit if candidates exist.
             if (!methods.isEmpty()) {
                 break;
             }
@@ -115,7 +115,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
                     fields.add(field);
                 }
             }
-            // if exist break.
+            // Exit if candidates exist.
             if (!fields.isEmpty()) {
                 break;
             }
