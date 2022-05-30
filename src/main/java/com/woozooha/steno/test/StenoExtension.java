@@ -2,6 +2,7 @@ package com.woozooha.steno.test;
 
 import com.woozooha.steno.Steno;
 import com.woozooha.steno.replace.StenoListener;
+import com.woozooha.steno.util.ContextUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.*;
@@ -21,11 +22,15 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
         log.info("beforeAll extensionContext={}", extensionContext);
+
+        ContextUtils.replacePageFactory();
     }
 
     @Override
     public void afterAll(ExtensionContext extensionContext) {
         log.info("afterAll extensionContext={}", extensionContext);
+
+        ContextUtils.resetPageFactory();
     }
 
     @Override

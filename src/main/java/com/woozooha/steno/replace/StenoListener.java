@@ -25,6 +25,9 @@ public class StenoListener implements WebDriverListener {
         if (!Steno.listen()) {
             return;
         }
+        if ("quit".equals(method.getName())) {
+            return;
+        }
 
         ContextUtils.saveScene();
     }
@@ -34,6 +37,9 @@ public class StenoListener implements WebDriverListener {
         log.info("target={}, method={}, args={}", target, method, args);
 
         if (!Steno.listen()) {
+            return;
+        }
+        if ("quit".equals(method.getName())) {
             return;
         }
 

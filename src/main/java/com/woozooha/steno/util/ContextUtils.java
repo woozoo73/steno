@@ -2,17 +2,28 @@ package com.woozooha.steno.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
+import com.woozooha.steno.Steno;
 import com.woozooha.steno.model.Element;
 import com.woozooha.steno.model.Scene;
-import com.woozooha.steno.Steno;
 import com.woozooha.steno.model.Story;
+import com.woozooha.steno.replace.PageFactoryInterceptor;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.agent.ByteBuddyAgent;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
+import net.bytebuddy.implementation.MethodDelegation;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
+import static net.bytebuddy.matcher.ElementMatchers.named;
+import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
+
+@Slf4j
 public abstract class ContextUtils {
 
     @Getter
@@ -20,6 +31,34 @@ public abstract class ContextUtils {
 
     static {
         objectMapper = new ObjectMapper();
+    }
+
+    public static void replacePageFactory() {
+        try {
+            ByteBuddyAgent.install();
+            ByteBuddy byteBuddy = new ByteBuddy();
+            byteBuddy
+                    .redefine(PageFactory.class)
+                    .method(named("initElements").and(takesArguments(SearchContext.class, Object.class)))
+                    .intercept(MethodDelegation.to(PageFactoryInterceptor.class))
+                    .make()
+                    .load(
+                            PageFactory.class.getClassLoader(),
+                            ClassReloadingStrategy.fromInstalledAgent());
+        } catch (Throwable t) {
+            // ignore.
+            log.error("Exception occurred.", t);
+        }
+    }
+
+    @SneakyThrows
+    public static void resetPageFactory() {
+        try {
+            ClassReloadingStrategy.fromInstalledAgent().reset(PageFactory.class);
+        } catch (Throwable t) {
+            // ignore.
+            log.error("Exception occurred.", t);
+        }
     }
 
     public static Steno currentSteno() {

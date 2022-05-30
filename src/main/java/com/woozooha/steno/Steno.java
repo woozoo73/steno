@@ -2,19 +2,9 @@ package com.woozooha.steno;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woozooha.steno.model.Story;
-import com.woozooha.steno.replace.PageFactoryInterceptor;
 import com.woozooha.steno.util.ContextUtils;
 import lombok.Getter;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.agent.ByteBuddyAgent;
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
-import net.bytebuddy.implementation.MethodDelegation;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
-
-import static net.bytebuddy.matcher.ElementMatchers.named;
-import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
 
 public class Steno {
 
@@ -69,22 +59,7 @@ public class Steno {
     }
 
     protected void init() {
-        initInterceptor();
         initStory();
-    }
-
-    protected void initInterceptor() {
-        ByteBuddyAgent.install();
-        ByteBuddy byteBuddy = new ByteBuddy();
-        byteBuddy
-                .redefine(PageFactory.class)
-                .method(named("initElements").and(takesArguments(SearchContext.class, Object.class)))
-                .intercept(MethodDelegation.to(PageFactoryInterceptor.class))
-                .make()
-                .load(
-                        PageFactory.class.getClassLoader(),
-                        ClassReloadingStrategy.fromInstalledAgent());
-        // FIXME: ResettableClassFileTransformer reset
     }
 
     protected void initStory() {
