@@ -25,7 +25,9 @@ public class IndexPage {
 
     public IndexPage(WebDriver driver) {
         this.driver = driver;
+    }
 
+    public void index() {
         driver.get("https://www.wikipedia.org");
     }
 

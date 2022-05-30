@@ -20,10 +20,6 @@ import java.time.Duration;
 @Slf4j
 class StenoRunTest {
 
-    static {
-        ContextUtils.replacePageFactory();
-    }
-
     @StenoWebDriver
     WebDriver driver;
 
@@ -49,6 +45,7 @@ class StenoRunTest {
     @Test
     void get() {
         IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
+        indexPage.index();
         ResultPage resultPage = indexPage.search("Selenium (software)");
 
         String firstHeading = resultPage.getFirstHeading();
