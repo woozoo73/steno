@@ -17,7 +17,7 @@ import java.time.Duration;
 @ExtendWith(StenoExtension.class)
 @StenoTest
 @Slf4j
-class StenoRunTest {
+public class StenoRunTest {
 
     @StenoWebDriver
     WebDriver driver;
