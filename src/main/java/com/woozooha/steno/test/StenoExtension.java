@@ -11,6 +11,7 @@ import org.openqa.selenium.support.events.EventFiringDecorator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -23,12 +24,22 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
     public void beforeAll(ExtensionContext extensionContext) {
         log.info("beforeAll extensionContext={}", extensionContext);
 
+        StenoTest stenoTest = readStenoTest(extensionContext);
+        if (stenoTest == null) {
+            return;
+        }
+
         ContextUtils.replacePageFactory();
     }
 
     @Override
     public void afterAll(ExtensionContext extensionContext) {
         log.info("afterAll extensionContext={}", extensionContext);
+
+        StenoTest stenoTest = readStenoTest(extensionContext);
+        if (stenoTest == null) {
+            return;
+        }
 
         ContextUtils.resetPageFactory();
     }
@@ -38,15 +49,52 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
     public void beforeEach(ExtensionContext extensionContext) {
         log.info("beforeEach extensionContext={}", extensionContext);
 
-        Object target = extensionContext.getTestInstance().orElse(null);
-        if (target == null) {
-            return;
-        }
-
-        StenoTest stenoTest = target.getClass().getAnnotation(StenoTest.class);
+        StenoTest stenoTest = readStenoTest(extensionContext);
         if (stenoTest == null) {
             return;
         }
+
+        WebDriver driver = loadAndBindWebDriver(extensionContext);
+
+        Steno.start(driver);
+    }
+
+    @Override
+    public void afterEach(ExtensionContext extensionContext) {
+        log.info("afterEach extensionContext={}", extensionContext);
+
+        StenoTest stenoTest = readStenoTest(extensionContext);
+        if (stenoTest == null) {
+            return;
+        }
+
+        Steno.end();
+    }
+
+    protected StenoTest readStenoTest(ExtensionContext extensionContext) {
+        Class<?> clazz = extensionContext.getTestClass().orElse(null);
+        if (clazz == null) {
+            return null;
+        }
+
+        return readStenoTest(clazz);
+    }
+
+    protected StenoTest readStenoTest(Class<?> clazz) {
+        StenoTest stenoTest = clazz.getAnnotation(StenoTest.class);
+        if (stenoTest == null) {
+            return null;
+        }
+
+        return stenoTest;
+    }
+
+    protected Object readTarget(ExtensionContext extensionContext) {
+        return extensionContext.getTestInstance().orElse(null);
+    }
+
+    protected WebDriver loadAndBindWebDriver(ExtensionContext extensionContext) throws IllegalAccessException, InvocationTargetException {
+        Object target = readTarget(extensionContext);
 
         List<Method> webDriverMethods = getMethodsAnnotatedWith(target.getClass(), StenoWebDriver.class);
         if (webDriverMethods.isEmpty()) {
@@ -77,17 +125,10 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         webDriverField.setAccessible(true);
         webDriverField.set(target, decorated);
 
-        Steno.start(decorated);
+        return decorated;
     }
 
-    @Override
-    public void afterEach(ExtensionContext extensionContext) {
-        log.info("afterEach extensionContext={}", extensionContext);
-
-        Steno.end();
-    }
-
-    public static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
+    protected static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final List<Method> methods = new ArrayList<>();
         Class<?> clazz = type;
         while (clazz != Object.class) {
@@ -106,7 +147,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return methods;
     }
 
-    public static List<Field> getFieldsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
+    protected static List<Field> getFieldsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final List<Field> fields = new ArrayList<>();
         Class<?> clazz = type;
         while (clazz != Object.class) {
