@@ -135,7 +135,7 @@ public abstract class ContextUtils {
         }
 
         Element element = new Element();
-        element.setRect(webElement.getRect());
+        element.setRect(Element.Rect.of(webElement.getRect()));
         if (by != null) {
             element.setBy(by.toString());
         }
