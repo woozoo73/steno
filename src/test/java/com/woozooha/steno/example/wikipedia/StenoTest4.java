@@ -13,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
+import java.util.List;
 
 @ExtendWith(StenoExtension.class)
 @StenoTest
@@ -47,9 +48,11 @@ class StenoTest4 {
 
         String firstHeading = resultPage.getFirstHeading();
         String siteSub = resultPage.getSiteSub();
+        List<String> tocs = resultPage.getTocs();
 
         log.info("firstHeading={}", firstHeading);
         log.info("siteSub={}", siteSub);
+        log.info("tocs={}", tocs);
     }
 
 }

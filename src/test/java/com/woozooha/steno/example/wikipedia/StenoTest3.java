@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 @ExtendWith(StenoExtension.class)
 @StenoTest
 @StenoWebDriverFactory(ChromeFactory.class)
@@ -38,9 +40,11 @@ class StenoTest3 {
 
         String firstHeading = resultPage.getFirstHeading();
         String siteSub = resultPage.getSiteSub();
+        List<String> tocs = resultPage.getTocs();
 
         log.info("firstHeading={}", firstHeading);
         log.info("siteSub={}", siteSub);
+        log.info("tocs={}", tocs);
     }
 
 }

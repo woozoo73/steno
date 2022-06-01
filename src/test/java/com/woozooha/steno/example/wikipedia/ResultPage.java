@@ -5,6 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public class ResultPage {
 
@@ -16,6 +19,9 @@ public class ResultPage {
     @FindBy(id = "siteSub")
     WebElement siteSub;
 
+    @FindBy(className = "toctext")
+    List<WebElement> tocTexts;
+
     public ResultPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -26,6 +32,10 @@ public class ResultPage {
 
     public String getSiteSub() {
         return siteSub.getText();
+    }
+
+    public List<String> getTocs() {
+        return tocTexts.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
 }
