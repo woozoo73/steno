@@ -78,12 +78,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
     }
 
     protected StenoTest readStenoTest(Class<?> clazz) {
-        StenoTest stenoTest = clazz.getAnnotation(StenoTest.class);
-        if (stenoTest == null) {
-            return null;
-        }
-
-        return stenoTest;
+        return clazz.getAnnotation(StenoTest.class);
     }
 
     protected Object readTarget(ExtensionContext extensionContext) {
@@ -125,9 +120,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
 
         Method webDriverMethod = webDriverMethods.get(0);
         webDriverMethod.setAccessible(true);
-        WebDriver driver = (WebDriver) webDriverMethod.invoke(target);
 
-        return driver;
+        return (WebDriver) webDriverMethod.invoke(target);
     }
 
     @SneakyThrows
@@ -138,11 +132,9 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         }
 
         Class<? extends WebDriverFactory> factoryClass = stenoWebDriverFactory.value();
-        WebDriverFactory factory = factoryClass.newInstance();
+        WebDriverFactory factory = factoryClass.getConstructor().newInstance();
 
-        WebDriver driver = factory.create();
-
-        return driver;
+        return factory.create();
     }
 
     @SneakyThrows
@@ -157,9 +149,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
 
         Method webDriverMethod = webDriverMethods.get(0);
         webDriverMethod.setAccessible(true);
-        WebDriver driver = (WebDriver) webDriverMethod.invoke(target);
 
-        return driver;
+        return (WebDriver) webDriverMethod.invoke(target);
     }
 
     @SneakyThrows
@@ -208,9 +199,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
 
     protected WebDriver addStenoListener(WebDriver driver) {
         StenoListener listener = new StenoListener();
-        WebDriver decorated = new EventFiringDecorator(listener).decorate(driver);
 
-        return decorated;
+        return new EventFiringDecorator(listener).decorate(driver);
     }
 
 }
