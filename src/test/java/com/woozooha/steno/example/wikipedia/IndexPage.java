@@ -1,4 +1,4 @@
-package com.woozooha.steno;
+package com.woozooha.steno.example.wikipedia;
 
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 @Getter
 public class IndexPage {
 
-    WebDriver driver;
+    final WebDriver driver;
 
     @FindBy(id = "searchInput")
     WebElement searchInput;

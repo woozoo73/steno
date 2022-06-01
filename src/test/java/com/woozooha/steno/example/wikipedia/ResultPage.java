@@ -1,4 +1,4 @@
-package com.woozooha.steno;
+package com.woozooha.steno.example.wikipedia;
 
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 @Getter
 public class ResultPage {
 
-    WebDriver driver;
+    final WebDriver driver;
 
     @FindBy(id = "firstHeading")
     WebElement firstHeading;
