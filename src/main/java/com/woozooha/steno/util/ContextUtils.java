@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import com.woozooha.steno.Steno;
 import com.woozooha.steno.model.Element;
+import com.woozooha.steno.model.Page;
 import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.model.Story;
 import com.woozooha.steno.replace.PageFactoryInterceptor;
@@ -74,6 +75,15 @@ public abstract class ContextUtils {
         return steno.getStory();
     }
 
+    public static Page currentPage() {
+        Story story = currentStory();
+        if (story == null) {
+            return null;
+        }
+
+        return story.lastPage();
+    }
+
     public static Scene currentScene() {
         Story story = currentStory();
         if (story == null) {
@@ -92,19 +102,53 @@ public abstract class ContextUtils {
         return steno.getDriver();
     }
 
-    public static Scene createScene(Object page) {
+    public static Page createPage(Object target) {
         Story story = currentStory();
         if (story == null) {
             return null;
         }
 
-        Scene scene = story.createScene();
-        scene.setPageClass(page.getClass());
-        WebDriver driver = currentDriver();
-        scene.setUrl(driver.getCurrentUrl());
-        scene.setTitle(driver.getTitle());
+        try {
+            Steno.listen(false);
 
-        return scene;
+            Page page = new Page();
+            page.setPageClass(target.getClass());
+            WebDriver driver = currentDriver();
+            page.setUrl(driver.getCurrentUrl());
+            page.setTitle(driver.getTitle());
+
+            story.getPages().add(page);
+
+            return page;
+        } finally {
+            Steno.listen(true);
+        }
+    }
+
+    public static Scene createScene() {
+        Story story = currentStory();
+        if (story == null) {
+            return null;
+        }
+
+        Page page = currentPage();
+
+        try {
+            Steno.listen(false);
+            Scene scene = new Scene(story.getScenes().size());
+            if (page != null) {
+                scene.setPageClass(page.getPageClass());
+            }
+            WebDriver driver = currentDriver();
+            scene.setUrl(driver.getCurrentUrl());
+            scene.setTitle(driver.getTitle());
+
+            story.getScenes().add(scene);
+
+            return scene;
+        } finally {
+            Steno.listen(true);
+        }
     }
 
     public static Element addElement(WebElement webElement) {
@@ -120,20 +164,6 @@ public abstract class ContextUtils {
             return null;
         }
 
-        Scene scene = currentScene();
-        if (scene == null) {
-            return null;
-        }
-
-        if (fieldName != null) {
-            boolean alreadyAdded = scene.getElements().stream()
-                    .filter(e -> fieldName.equals(e.getFieldName()))
-                    .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
-            if (alreadyAdded) {
-                return null;
-            }
-        }
-
         Element element = new Element();
         element.setRect(Element.Rect.of(webElement.getRect()));
         if (by != null) {
@@ -143,7 +173,24 @@ public abstract class ContextUtils {
             element.setFieldName(fieldName);
         }
 
-        scene.getElements().add(element);
+        Page page = currentPage();
+        if (page != null) {
+            if (fieldName != null) {
+                boolean alreadyAdded = page.getElements().stream()
+                        .filter(e -> fieldName.equals(e.getFieldName()))
+                        .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
+                if (alreadyAdded) {
+                    return element;
+                }
+            }
+
+            page.getElements().add(element);
+        }
+
+        Scene scene = currentScene();
+        if (scene != null) {
+            scene.getElements().add(element);
+        }
 
         return element;
     }
@@ -159,11 +206,6 @@ public abstract class ContextUtils {
             saveSceneData();
             saveScreenshot();
             saveSource();
-
-            Story story = currentStory();
-            story.setSceneId(story.getSceneId() + 1L);
-            Scene scene = currentScene();
-            scene.setId(story.getSceneId());
         } finally {
             Steno.listen(true);
         }

@@ -1,6 +1,8 @@
 package com.woozooha.steno.replace;
 
 import com.woozooha.steno.Steno;
+import com.woozooha.steno.model.Event;
+import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.util.ContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
@@ -25,10 +27,10 @@ public class StenoListener implements WebDriverListener {
         if (!Steno.listen()) {
             return;
         }
-        if ("quit".equals(method.getName())) {
-            return;
-        }
 
+        Event event = Event.of(Event.Type.Before, method, args);
+        Scene scene = ContextUtils.createScene();
+        scene.getEvents().add(event);
         ContextUtils.saveScene();
     }
 
@@ -43,6 +45,9 @@ public class StenoListener implements WebDriverListener {
             return;
         }
 
+        Event event = Event.of(Event.Type.After, method, args);
+        Scene scene = ContextUtils.createScene();
+        scene.getEvents().add(event);
         ContextUtils.saveScene();
     }
 

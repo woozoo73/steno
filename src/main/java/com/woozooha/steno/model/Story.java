@@ -30,12 +30,11 @@ public class Story {
     private String uuid;
 
     @JsonIgnore
-    private Long sceneId = 0L;
-
-    @JsonIgnore
     private File dateDir;
     @JsonIgnore
     private File storyDir;
+
+    private List<Page> pages = new ArrayList<>();
 
     private List<Scene> scenes = new ArrayList<>();
 
@@ -44,11 +43,12 @@ public class Story {
         initDirectory();
     }
 
-    public Scene createScene() {
-        Scene scene = new Scene(sceneId);
-        scenes.add(scene);
+    public Page lastPage() {
+        if (pages.isEmpty()) {
+            return null;
+        }
 
-        return scene;
+        return pages.get(pages.size() - 1);
     }
 
     public Scene lastScene() {

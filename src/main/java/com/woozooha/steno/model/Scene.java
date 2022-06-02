@@ -11,8 +11,7 @@ import java.util.List;
 @Getter
 public class Scene {
 
-    @JsonIgnore
-    private Long id;
+    private int id;
 
     private Class<?> pageClass;
 
@@ -22,7 +21,9 @@ public class Scene {
 
     private List<Element> elements = new ArrayList<>();
 
-    public Scene(Long id) {
+    private List<Event> events = new ArrayList<>();
+
+    public Scene(int id) {
         this.id = id;
     }
 
