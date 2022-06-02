@@ -17,6 +17,8 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass
 public class StenoLauncher {
 
     public void execute(Class<?> clazz) {
+        log.info("execute: {}", clazz);
+
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
 
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
