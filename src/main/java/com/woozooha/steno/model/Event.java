@@ -14,6 +14,8 @@ public class Event {
 
     private Type type;
 
+    private String targetName;
+
     private String methodName;
 
     private List<String> arguments;
@@ -21,13 +23,19 @@ public class Event {
     public Event() {
     }
 
-    public static Event of(Type type, Method method, Object[] args) {
+    public static Event of(Type type, Object target, Method method, Object[] args) {
         Event event = new Event();
         event.setType(type);
+        if (target != null) {
+            event.setTargetName(target.getClass().getName());
+        }
         if (method != null) {
             event.setMethodName(method.getName());
         }
-        List<String> arguments = Arrays.stream(args).map(Object::toString).collect(Collectors.toList());
+        List<String> arguments = null;
+        if (args != null) {
+            arguments = Arrays.stream(args).map(Object::toString).collect(Collectors.toList());
+        }
         event.setArguments(arguments);
 
         return event;

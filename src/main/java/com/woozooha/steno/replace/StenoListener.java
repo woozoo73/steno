@@ -28,7 +28,7 @@ public class StenoListener implements WebDriverListener {
             return;
         }
 
-        Event event = Event.of(Event.Type.Before, method, args);
+        Event event = Event.of(Event.Type.Before, target, method, args);
         Scene scene = ContextUtils.createScene();
         scene.getEvents().add(event);
         ContextUtils.saveScene();
@@ -45,7 +45,7 @@ public class StenoListener implements WebDriverListener {
             return;
         }
 
-        Event event = Event.of(Event.Type.After, method, args);
+        Event event = Event.of(Event.Type.After, target, method, args);
         Scene scene = ContextUtils.createScene();
         scene.getEvents().add(event);
         ContextUtils.saveScene();
