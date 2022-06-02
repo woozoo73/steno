@@ -176,6 +176,8 @@ public abstract class ContextUtils {
         File storyDir = story.getStoryDir();
         File to = new File(storyDir, story.getDataFilename());
         Files.write(json.getBytes(StandardCharsets.UTF_8), to);
+
+        log.info("steno data location: {}", story.getStoryDir());
     }
 
     @SneakyThrows
