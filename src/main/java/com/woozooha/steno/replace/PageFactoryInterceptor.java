@@ -19,6 +19,7 @@ public class PageFactoryInterceptor {
 
     public static void beforeInitElements(Object page) {
         ContextUtils.createScene(page);
+        ContextUtils.saveScene();
     }
 
     public static void afterInitElements(Object page) {

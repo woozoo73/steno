@@ -45,7 +45,7 @@ public class Story {
     }
 
     public Scene createScene() {
-        Scene scene = new Scene(++sceneId);
+        Scene scene = new Scene(sceneId);
         scenes.add(scene);
 
         return scene;
