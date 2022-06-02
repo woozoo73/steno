@@ -20,6 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Supplier;
 
 import static net.bytebuddy.matcher.ElementMatchers.named;
 import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
@@ -108,9 +109,7 @@ public abstract class ContextUtils {
             return null;
         }
 
-        try {
-            Steno.listen(false);
-
+        return doQuietly(() -> {
             Page page = new Page();
             page.setPageClass(target.getClass());
             WebDriver driver = currentDriver();
@@ -120,9 +119,7 @@ public abstract class ContextUtils {
             story.getPages().add(page);
 
             return page;
-        } finally {
-            Steno.listen(true);
-        }
+        });
     }
 
     public static Scene createScene() {
@@ -133,8 +130,7 @@ public abstract class ContextUtils {
 
         Page page = currentPage();
 
-        try {
-            Steno.listen(false);
+        return doQuietly(() -> {
             Scene scene = new Scene(story.getScenes().size());
             if (page != null) {
                 scene.setPageClass(page.getPageClass());
@@ -146,6 +142,14 @@ public abstract class ContextUtils {
             story.getScenes().add(scene);
 
             return scene;
+        });
+    }
+
+    public static <T> T doQuietly(Supplier<T> s) {
+        try {
+            Steno.listen(false);
+
+            return s.get();
         } finally {
             Steno.listen(true);
         }

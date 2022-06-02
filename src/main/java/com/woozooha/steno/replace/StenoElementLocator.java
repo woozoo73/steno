@@ -1,6 +1,5 @@
 package com.woozooha.steno.replace;
 
-import com.woozooha.steno.Steno;
 import com.woozooha.steno.util.ContextUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -29,21 +28,17 @@ public class StenoElementLocator extends DefaultElementLocator {
     }
 
     public WebElement findElement() {
-        try {
-            Steno.listen(false);
+        return ContextUtils.doQuietly(() -> {
             WebElement webElement = super.findElement();
 
             ContextUtils.addElement(webElement, by, fieldName);
 
             return webElement;
-        } finally {
-            Steno.listen(true);
-        }
+        });
     }
 
     public List<WebElement> findElements() {
-        try {
-            Steno.listen(false);
+        return ContextUtils.doQuietly(() -> {
             List<WebElement> webElements = super.findElements();
 
             for (int i = 0; i < webElements.size(); i++) {
@@ -52,9 +47,7 @@ public class StenoElementLocator extends DefaultElementLocator {
             }
 
             return webElements;
-        } finally {
-            Steno.listen(true);
-        }
+        });
     }
 
 }
