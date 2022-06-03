@@ -38,4 +38,12 @@ public class ResultPage {
         return tocTexts.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
+    public String getTocs(int index) {
+        if (index > tocTexts.size() - 1) {
+            return null;
+        }
+
+        return tocTexts.get(index).getText();
+    }
+
 }

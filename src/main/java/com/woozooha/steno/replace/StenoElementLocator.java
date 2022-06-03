@@ -43,6 +43,7 @@ public class StenoElementLocator extends DefaultElementLocator {
 
             for (int i = 0; i < webElements.size(); i++) {
                 WebElement webElement = webElements.get(i);
+
                 ContextUtils.addElement(webElement, by, fieldName + "[" + i + "]");
             }
 

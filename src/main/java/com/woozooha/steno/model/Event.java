@@ -34,7 +34,17 @@ public class Event {
         }
         List<String> arguments = null;
         if (args != null) {
-            arguments = Arrays.stream(args).map(Object::toString).collect(Collectors.toList());
+            arguments = Arrays.stream(args).map(v -> {
+                if (v == null) {
+                    return "null";
+                }
+
+                if (v instanceof Object[]) {
+                    return Arrays.toString((Object[]) v);
+                }
+
+                return v.toString();
+            }).collect(Collectors.toList());
         }
         event.setArguments(arguments);
 
