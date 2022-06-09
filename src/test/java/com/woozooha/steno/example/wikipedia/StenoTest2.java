@@ -34,7 +34,7 @@ class StenoTest2 {
     }
 
     @Test
-    void get() {
+    void search() {
         IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
         indexPage.index();
         ResultPage resultPage = indexPage.search("Selenium (software)");
