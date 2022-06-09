@@ -1,6 +1,7 @@
 package com.woozooha.steno.test;
 
 import com.woozooha.steno.Steno;
+import com.woozooha.steno.replace.StenoDriver;
 import com.woozooha.steno.replace.StenoListener;
 import com.woozooha.steno.util.ContextUtils;
 import com.woozooha.steno.util.ReflectionUtils;
@@ -17,6 +18,8 @@ import java.util.List;
 
 @Slf4j
 public class StenoExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+
+    private Steno steno;
 
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
@@ -52,7 +55,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        createAndBindWebDriver(extensionContext);
+        steno = createAndBindWebDriver(extensionContext);
     }
 
     @Override
@@ -64,8 +67,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        // FIXME:
-        // Steno.end();
+        steno.saveStory();
     }
 
     protected StenoTest readStenoTest(ExtensionContext extensionContext) {
@@ -91,7 +93,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         WebDriver driver = createWebDriver(target);
         StenoListener listener = new StenoListener(driver);
         WebDriver decorated = addStenoListener(driver, listener);
-        bindWebDriver(target, decorated);
+        StenoDriver stenoDriver = new StenoDriver(listener.getSteno(), decorated);
+        bindWebDriver(target, stenoDriver);
 
         return listener.getSteno();
     }
