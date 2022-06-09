@@ -51,7 +51,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        WebDriver driver = createAndBindDriver(extensionContext);
+        WebDriver driver = createAndBindWebDriver(extensionContext);
 
         Steno.start(driver);
     }
@@ -85,7 +85,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return extensionContext.getTestInstance().orElse(null);
     }
 
-    protected WebDriver createAndBindDriver(ExtensionContext extensionContext) {
+    protected WebDriver createAndBindWebDriver(ExtensionContext extensionContext) {
         Object target = readTarget(extensionContext);
 
         WebDriver driver = createWebDriver(target);
