@@ -21,16 +21,12 @@ public class PageFactoryInterceptor {
     }
 
     public static void beforeInitElements(Steno steno, Object page) {
-        // FIXME:
-        // ContextUtils.createPage(page);
-        // FIXME:
         steno.createPage(page);
         steno.createScene();
-        steno.saveScene();
     }
 
     public static void afterInitElements(Steno steno, Object page) {
-        // do nothing.
+        steno.saveScene();
     }
 
 }
