@@ -38,7 +38,6 @@ public class StenoListener implements WebDriverListener {
         Event event = Event.of(Event.Type.Before, target, method, args);
         Scene scene = steno.createScene();
         scene.getEvents().add(event);
-        steno.saveScene();
     }
 
     public void afterAnyCall(Object target, Method method, Object[] args, Object result) {
@@ -49,13 +48,11 @@ public class StenoListener implements WebDriverListener {
             return;
         }
         if ("quit".equals(method.getName())) {
-            steno.saveStory();
-
             return;
         }
 
         Event event = Event.of(Event.Type.After, target, method, args);
-        Scene scene = steno.createScene();
+        Scene scene = steno.getStory().lastScene();
         scene.getEvents().add(event);
         steno.saveScene();
     }
