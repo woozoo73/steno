@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -51,9 +52,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        WebDriver driver = createAndBindWebDriver(extensionContext);
-
-        Steno.start(driver);
+        createAndBindWebDriver(extensionContext);
     }
 
     @Override
@@ -65,7 +64,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        Steno.end();
+        // FIXME:
+        // Steno.end();
     }
 
     protected StenoTest readStenoTest(ExtensionContext extensionContext) {
@@ -85,14 +85,15 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return extensionContext.getTestInstance().orElse(null);
     }
 
-    protected WebDriver createAndBindWebDriver(ExtensionContext extensionContext) {
+    protected Steno createAndBindWebDriver(ExtensionContext extensionContext) {
         Object target = readTarget(extensionContext);
 
         WebDriver driver = createWebDriver(target);
-        WebDriver decorated = addStenoListener(driver);
+        StenoListener listener = new StenoListener(driver);
+        WebDriver decorated = addStenoListener(driver, listener);
         bindWebDriver(target, decorated);
 
-        return decorated;
+        return listener.getSteno();
     }
 
     @SneakyThrows
@@ -197,9 +198,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return true;
     }
 
-    protected WebDriver addStenoListener(WebDriver driver) {
-        StenoListener listener = new StenoListener();
-
+    protected WebDriver addStenoListener(WebDriver driver, WebDriverListener listener) {
         return new EventFiringDecorator(listener).decorate(driver);
     }
 

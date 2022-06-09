@@ -1,69 +1,124 @@
 package com.woozooha.steno;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.Files;
+import com.woozooha.steno.model.Page;
+import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.model.Story;
-import com.woozooha.steno.util.ContextUtils;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.function.Supplier;
+
+@Slf4j
 public class Steno {
 
-    private static final ThreadLocal<Steno> STENO = new ThreadLocal<>();
-
-    private static final ThreadLocal<Boolean> LISTEN = new ThreadLocal<>();
+    @Getter
+    @Setter
+    private boolean listen = false;
 
     @Getter
     private static ObjectMapper objectMapper;
 
     static {
         objectMapper = new ObjectMapper();
-        LISTEN.set(Boolean.FALSE);
     }
 
     @Getter
-    private Story story;
+    private Story story = new Story();
 
     @Getter
     private WebDriver driver;
 
     public Steno(WebDriver driver) {
         this.driver = driver;
-        init();
     }
 
-    public static Steno start(WebDriver driver) {
-        Steno steno = new Steno(driver);
-        STENO.set(steno);
-        LISTEN.set(Boolean.TRUE);
+    public Scene createScene() {
+        if (story == null) {
+            return null;
+        }
 
-        return steno;
+        Page page = story.lastPage();
+
+        return doQuietly(() -> {
+            Scene scene = new Scene(story.getScenes().size());
+            if (page != null) {
+                scene.setPageClass(page.getPageClass());
+            }
+            scene.setUrl(driver.getCurrentUrl());
+            scene.setTitle(driver.getTitle());
+
+            story.getScenes().add(scene);
+
+            return scene;
+        });
     }
 
-    public static void end() {
-        ContextUtils.saveStory();
-
-        LISTEN.set(Boolean.FALSE);
-        STENO.remove();
+    public void saveScene() {
+        doQuietly(() -> {
+            saveSceneData();
+            saveScreenshot();
+            saveSource();
+            return null;
+        });
     }
 
-    public static Steno currentSteno() {
-        return STENO.get();
+    public <T> T doQuietly(Supplier<T> s) {
+        try {
+            setListen(false);
+
+            return s.get();
+        } finally {
+            setListen(true);
+        }
     }
 
-    public static Boolean listen() {
-        return LISTEN.get();
+    @SneakyThrows
+    private void saveStoryData() {
+        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(story);
+        File storyDir = story.getStoryDir();
+        File to = new File(storyDir, story.getDataFilename());
+        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
+
+        log.info("steno data location: {}", story.getStoryDir());
     }
 
-    public static void listen(Boolean status) {
-        LISTEN.set(status);
+    @SneakyThrows
+    private void saveSceneData() {
+        Scene scene = story.lastScene();
+
+        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(scene);
+        File storyDir = story.getStoryDir();
+        File to = new File(storyDir, scene.getDataFilename());
+        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
     }
 
-    protected void init() {
-        initStory();
+    @SneakyThrows
+    private void saveScreenshot() {
+        Scene scene = story.lastScene();
+
+        File from = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File storyDir = story.getStoryDir();
+        File to = new File(storyDir, scene.getScreenshotFilename());
+        Files.copy(from, to);
     }
 
-    protected void initStory() {
-        story = new Story();
+    @SneakyThrows
+    private void saveSource() {
+        Scene scene = story.lastScene();
+
+        String source = driver.getPageSource();
+        File storyDir = story.getStoryDir();
+        File to = new File(storyDir, scene.getPageSourceFilename());
+        Files.write(source.getBytes(StandardCharsets.UTF_8), to);
     }
 
 }

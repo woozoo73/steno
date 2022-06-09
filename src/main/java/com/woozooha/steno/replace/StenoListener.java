@@ -4,6 +4,7 @@ import com.woozooha.steno.Steno;
 import com.woozooha.steno.model.Event;
 import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.util.ContextUtils;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Sequence;
@@ -20,16 +21,23 @@ import java.util.Set;
 @Slf4j
 public class StenoListener implements WebDriverListener {
 
+    @Getter
+    private Steno steno;
+
+    public StenoListener(WebDriver driver) {
+        steno = new Steno(driver);
+    }
+
     public void beforeAnyCall(Object target, Method method, Object[] args) {
         log.info("beforeAnyCall");
         log.info("target={}, method={}, args={}", target, method, args);
 
-        if (!Steno.listen()) {
+        if (!steno.isListen()) {
             return;
         }
 
         Event event = Event.of(Event.Type.Before, target, method, args);
-        Scene scene = ContextUtils.createScene();
+        Scene scene = steno.createScene();
         scene.getEvents().add(event);
         ContextUtils.saveScene();
     }
@@ -38,7 +46,7 @@ public class StenoListener implements WebDriverListener {
         log.info("afterAnyCall");
         log.info("target={}, method={}, args={}", target, method, args);
 
-        if (!Steno.listen()) {
+        if (!steno.isListen()) {
             return;
         }
         if ("quit".equals(method.getName())) {
@@ -46,9 +54,9 @@ public class StenoListener implements WebDriverListener {
         }
 
         Event event = Event.of(Event.Type.After, target, method, args);
-        Scene scene = ContextUtils.createScene();
+        Scene scene = steno.createScene();
         scene.getEvents().add(event);
-        ContextUtils.saveScene();
+        steno.saveScene();
     }
 
     public void onError(Object target, Method method, Object[] args, InvocationTargetException e) {

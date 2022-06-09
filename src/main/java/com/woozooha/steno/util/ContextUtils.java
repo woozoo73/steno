@@ -63,200 +63,177 @@ public abstract class ContextUtils {
         }
     }
 
-    public static Steno currentSteno() {
-        return Steno.currentSteno();
-    }
+//    public static Steno currentSteno() {
+//        return Steno.currentSteno();
+//    }
 
-    public static Story currentStory() {
-        Steno steno = currentSteno();
-        if (steno == null) {
-            return null;
-        }
+//    public static Story currentStory() {
+//        Steno steno = currentSteno();
+//        if (steno == null) {
+//            return null;
+//        }
+//
+//        return steno.getStory();
+//    }
 
-        return steno.getStory();
-    }
+//    public static Page currentPage() {
+//        Story story = currentStory();
+//        if (story == null) {
+//            return null;
+//        }
+//
+//        return story.lastPage();
+//    }
+//
+//    public static Scene currentScene() {
+//        Story story = currentStory();
+//        if (story == null) {
+//            return null;
+//        }
+//
+//        return story.lastScene();
+//    }
 
-    public static Page currentPage() {
-        Story story = currentStory();
-        if (story == null) {
-            return null;
-        }
+//    public static WebDriver currentDriver() {
+//        Steno steno = Steno.currentSteno();
+//        if (steno == null) {
+//            return null;
+//        }
+//
+//        return steno.getDriver();
+//    }
 
-        return story.lastPage();
-    }
+//    public static Page createPage(Object target) {
+//        Story story = currentStory();
+//        if (story == null) {
+//            return null;
+//        }
+//
+//        return doQuietly(() -> {
+//            Page page = new Page();
+//            page.setPageClass(target.getClass());
+//            WebDriver driver = currentDriver();
+//            page.setUrl(driver.getCurrentUrl());
+//            page.setTitle(driver.getTitle());
+//
+//            story.getPages().add(page);
+//
+//            return page;
+//        });
+//    }
+//
+//    public static <T> T doQuietly(Supplier<T> s) {
+//        try {
+//            Steno.listen(false);
+//
+//            return s.get();
+//        } finally {
+//            Steno.listen(true);
+//        }
+//    }
+//
+//    public static Element addElement(WebElement webElement) {
+//        return addElement(webElement, null);
+//    }
+//
+//    public static Element addElement(WebElement webElement, By by) {
+//        return addElement(webElement, by, null);
+//    }
+//
+//    public static Element addElement(WebElement webElement, By by, String fieldName) {
+//        if (webElement == null) {
+//            return null;
+//        }
+//
+//        Element element = new Element();
+//        element.setRect(Element.Rect.of(webElement.getRect()));
+//        if (by != null) {
+//            element.setBy(by.toString());
+//        }
+//        if (fieldName != null) {
+//            element.setFieldName(fieldName);
+//        }
+//
+//        Page page = currentPage();
+//        if (page != null) {
+//            if (fieldName != null) {
+//                boolean alreadyAdded = page.getElements().stream()
+//                        .filter(e -> fieldName.equals(e.getFieldName()))
+//                        .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
+//                if (alreadyAdded) {
+//                    return element;
+//                }
+//            }
+//
+//            page.getElements().add(element);
+//        }
+//
+//        Scene scene = currentScene();
+//        if (scene != null) {
+//            scene.getElements().add(element);
+//        }
+//
+//        return element;
+//    }
+//
+//    public static void saveStory() {
+//        saveStoryData();
+//    }
+//
+//    public static void saveScene() {
+//        try {
+//            Steno.listen(false);
+//
+//            saveSceneData();
+//            saveScreenshot();
+//            saveSource();
+//        } finally {
+//            Steno.listen(true);
+//        }
+//    }
 
-    public static Scene currentScene() {
-        Story story = currentStory();
-        if (story == null) {
-            return null;
-        }
-
-        return story.lastScene();
-    }
-
-    public static WebDriver currentDriver() {
-        Steno steno = Steno.currentSteno();
-        if (steno == null) {
-            return null;
-        }
-
-        return steno.getDriver();
-    }
-
-    public static Page createPage(Object target) {
-        Story story = currentStory();
-        if (story == null) {
-            return null;
-        }
-
-        return doQuietly(() -> {
-            Page page = new Page();
-            page.setPageClass(target.getClass());
-            WebDriver driver = currentDriver();
-            page.setUrl(driver.getCurrentUrl());
-            page.setTitle(driver.getTitle());
-
-            story.getPages().add(page);
-
-            return page;
-        });
-    }
-
-    public static Scene createScene() {
-        Story story = currentStory();
-        if (story == null) {
-            return null;
-        }
-
-        Page page = currentPage();
-
-        return doQuietly(() -> {
-            Scene scene = new Scene(story.getScenes().size());
-            if (page != null) {
-                scene.setPageClass(page.getPageClass());
-            }
-            WebDriver driver = currentDriver();
-            scene.setUrl(driver.getCurrentUrl());
-            scene.setTitle(driver.getTitle());
-
-            story.getScenes().add(scene);
-
-            return scene;
-        });
-    }
-
-    public static <T> T doQuietly(Supplier<T> s) {
-        try {
-            Steno.listen(false);
-
-            return s.get();
-        } finally {
-            Steno.listen(true);
-        }
-    }
-
-    public static Element addElement(WebElement webElement) {
-        return addElement(webElement, null);
-    }
-
-    public static Element addElement(WebElement webElement, By by) {
-        return addElement(webElement, by, null);
-    }
-
-    public static Element addElement(WebElement webElement, By by, String fieldName) {
-        if (webElement == null) {
-            return null;
-        }
-
-        Element element = new Element();
-        element.setRect(Element.Rect.of(webElement.getRect()));
-        if (by != null) {
-            element.setBy(by.toString());
-        }
-        if (fieldName != null) {
-            element.setFieldName(fieldName);
-        }
-
-        Page page = currentPage();
-        if (page != null) {
-            if (fieldName != null) {
-                boolean alreadyAdded = page.getElements().stream()
-                        .filter(e -> fieldName.equals(e.getFieldName()))
-                        .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
-                if (alreadyAdded) {
-                    return element;
-                }
-            }
-
-            page.getElements().add(element);
-        }
-
-        Scene scene = currentScene();
-        if (scene != null) {
-            scene.getElements().add(element);
-        }
-
-        return element;
-    }
-
-    public static void saveStory() {
-        saveStoryData();
-    }
-
-    public static void saveScene() {
-        try {
-            Steno.listen(false);
-
-            saveSceneData();
-            saveScreenshot();
-            saveSource();
-        } finally {
-            Steno.listen(true);
-        }
-    }
-
-    @SneakyThrows
-    private static void saveStoryData() {
-        Story story = currentStory();
-        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(story);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, story.getDataFilename());
-        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
-
-        log.info("steno data location: {}", story.getStoryDir());
-    }
-
-    @SneakyThrows
-    private static void saveSceneData() {
-        Story story = currentStory();
-        Scene scene = currentScene();
-
-        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(scene);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getDataFilename());
-        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
-    }
-
-    @SneakyThrows
-    private static void saveScreenshot() {
-        Story story = currentStory();
-        Scene scene = currentScene();
-
-        File from = ((TakesScreenshot) currentDriver()).getScreenshotAs(OutputType.FILE);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getScreenshotFilename());
-        Files.copy(from, to);
-    }
-
-    @SneakyThrows
-    private static void saveSource() {
-        Story story = currentStory();
-        Scene scene = currentScene();
-
-        String source = currentDriver().getPageSource();
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getPageSourceFilename());
-        Files.write(source.getBytes(StandardCharsets.UTF_8), to);
-    }
+//    @SneakyThrows
+//    private static void saveStoryData() {
+//        Story story = currentStory();
+//        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(story);
+//        File storyDir = story.getStoryDir();
+//        File to = new File(storyDir, story.getDataFilename());
+//        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
+//
+//        log.info("steno data location: {}", story.getStoryDir());
+//    }
+//
+//    @SneakyThrows
+//    private static void saveSceneData() {
+//        Story story = currentStory();
+//        Scene scene = currentScene();
+//
+//        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(scene);
+//        File storyDir = story.getStoryDir();
+//        File to = new File(storyDir, scene.getDataFilename());
+//        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
+//    }
+//
+//    @SneakyThrows
+//    private static void saveScreenshot() {
+//        Story story = currentStory();
+//        Scene scene = currentScene();
+//
+//        File from = ((TakesScreenshot) currentDriver()).getScreenshotAs(OutputType.FILE);
+//        File storyDir = story.getStoryDir();
+//        File to = new File(storyDir, scene.getScreenshotFilename());
+//        Files.copy(from, to);
+//    }
+//
+//    @SneakyThrows
+//    private static void saveSource() {
+//        Story story = currentStory();
+//        Scene scene = currentScene();
+//
+//        String source = currentDriver().getPageSource();
+//        File storyDir = story.getStoryDir();
+//        File to = new File(storyDir, scene.getPageSourceFilename());
+//        Files.write(source.getBytes(StandardCharsets.UTF_8), to);
+//    }
 
 }

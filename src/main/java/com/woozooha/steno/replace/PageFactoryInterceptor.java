@@ -18,7 +18,8 @@ public class PageFactoryInterceptor {
     }
 
     public static void beforeInitElements(Object page) {
-        ContextUtils.createPage(page);
+        // FIXME:
+        // ContextUtils.createPage(page);
         // FIXME:
         // ContextUtils.saveScene();
     }
