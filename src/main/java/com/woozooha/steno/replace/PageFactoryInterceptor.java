@@ -1,6 +1,6 @@
 package com.woozooha.steno.replace;
 
-import com.woozooha.steno.util.ContextUtils;
+import com.woozooha.steno.Steno;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.support.PageFactory;
@@ -10,20 +10,26 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 public class PageFactoryInterceptor {
 
     public static void initElements(SearchContext searchContext, Object page) {
-        beforeInitElements(page);
+        StenoDriver stenoDriver = (StenoDriver) searchContext;
+        Steno steno = stenoDriver.getSteno();
 
-        PageFactory.initElements((ElementLocatorFactory) (new StenoElementLocatorFactory(searchContext)), (Object) page);
+        beforeInitElements(steno, page);
 
-        afterInitElements(page);
+        PageFactory.initElements((ElementLocatorFactory) (new StenoElementLocatorFactory(steno, searchContext)), (Object) page);
+
+        afterInitElements(steno, page);
     }
 
-    public static void beforeInitElements(Object page) {
-        ContextUtils.createPage(page);
+    public static void beforeInitElements(Steno steno, Object page) {
         // FIXME:
-        // ContextUtils.saveScene();
+        // ContextUtils.createPage(page);
+        // FIXME:
+        steno.createPage(page);
+        steno.createScene();
+        steno.saveScene();
     }
 
-    public static void afterInitElements(Object page) {
+    public static void afterInitElements(Steno steno, Object page) {
         // do nothing.
     }
 

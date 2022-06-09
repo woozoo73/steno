@@ -1,6 +1,7 @@
 package com.woozooha.steno.test;
 
 import com.woozooha.steno.Steno;
+import com.woozooha.steno.replace.StenoDriver;
 import com.woozooha.steno.replace.StenoListener;
 import com.woozooha.steno.util.ContextUtils;
 import com.woozooha.steno.util.ReflectionUtils;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Slf4j
 public class StenoExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+
+    private Steno steno;
 
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
@@ -51,9 +55,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        WebDriver driver = createAndBindWebDriver(extensionContext);
-
-        Steno.start(driver);
+        steno = createAndBindWebDriver(extensionContext);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
             return;
         }
 
-        Steno.end();
+        steno.saveStory();
     }
 
     protected StenoTest readStenoTest(ExtensionContext extensionContext) {
@@ -85,14 +87,16 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return extensionContext.getTestInstance().orElse(null);
     }
 
-    protected WebDriver createAndBindWebDriver(ExtensionContext extensionContext) {
+    protected Steno createAndBindWebDriver(ExtensionContext extensionContext) {
         Object target = readTarget(extensionContext);
 
         WebDriver driver = createWebDriver(target);
-        WebDriver decorated = addStenoListener(driver);
-        bindWebDriver(target, decorated);
+        StenoListener listener = new StenoListener(driver);
+        WebDriver decorated = addStenoListener(driver, listener);
+        StenoDriver stenoDriver = new StenoDriver(listener.getSteno(), decorated);
+        bindWebDriver(target, stenoDriver);
 
-        return decorated;
+        return listener.getSteno();
     }
 
     @SneakyThrows
@@ -197,9 +201,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         return true;
     }
 
-    protected WebDriver addStenoListener(WebDriver driver) {
-        StenoListener listener = new StenoListener();
-
+    protected WebDriver addStenoListener(WebDriver driver, WebDriverListener listener) {
         return new EventFiringDecorator(listener).decorate(driver);
     }
 

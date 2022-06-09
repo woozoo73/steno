@@ -1,6 +1,6 @@
 package com.woozooha.steno.replace;
 
-import com.woozooha.steno.util.ContextUtils;
+import com.woozooha.steno.Steno;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -13,42 +13,41 @@ import java.util.List;
 
 public class StenoElementLocator extends DefaultElementLocator {
 
+    private final Steno steno;
+
     private final String fieldName;
 
     private final By by;
 
-    public StenoElementLocator(SearchContext searchContext, Field field) {
-        this(searchContext, field, (AbstractAnnotations) (new Annotations(field)));
+    public StenoElementLocator(Steno steno, SearchContext searchContext, Field field) {
+        this(steno, searchContext, field, (AbstractAnnotations) (new Annotations(field)));
     }
 
-    public StenoElementLocator(SearchContext searchContext, Field field, AbstractAnnotations annotations) {
+    public StenoElementLocator(Steno steno, SearchContext searchContext, Field field, AbstractAnnotations annotations) {
         super(searchContext, annotations);
+        this.steno = steno;
         this.fieldName = field.getName();
         this.by = annotations.buildBy();
     }
 
     public WebElement findElement() {
-        return ContextUtils.doQuietly(() -> {
-            WebElement webElement = super.findElement();
+        WebElement webElement = super.findElement();
 
-            ContextUtils.addElement(webElement, by, fieldName);
+        steno.addElement(webElement, by, fieldName);
 
-            return webElement;
-        });
+        return webElement;
     }
 
     public List<WebElement> findElements() {
-        return ContextUtils.doQuietly(() -> {
-            List<WebElement> webElements = super.findElements();
+        List<WebElement> webElements = super.findElements();
 
-            for (int i = 0; i < webElements.size(); i++) {
-                WebElement webElement = webElements.get(i);
+        for (int i = 0; i < webElements.size(); i++) {
+            WebElement webElement = webElements.get(i);
 
-                ContextUtils.addElement(webElement, by, fieldName + "[" + i + "]");
-            }
+            steno.addElement(webElement, by, fieldName + "[" + i + "]");
+        }
 
-            return webElements;
-        });
+        return webElements;
     }
 
 }
