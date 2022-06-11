@@ -38,6 +38,7 @@ public class StenoListener implements WebDriverListener {
         Event event = Event.of(Event.Type.Before, target, method, args);
         Scene scene = steno.createScene();
         scene.getEvents().add(event);
+        steno.saveScene();
     }
 
     public void afterAnyCall(Object target, Method method, Object[] args, Object result) {

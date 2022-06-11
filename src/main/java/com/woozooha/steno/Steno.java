@@ -24,23 +24,19 @@ public class Steno {
     private boolean listen = true;
 
     @Getter
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Getter
-    private Story story = new Story();
+    private final Story story = new Story();
 
     @Getter
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public Steno(WebDriver driver) {
         this.driver = driver;
     }
 
     public Page createPage(Object target) {
-        if (story == null) {
-            return null;
-        }
-
         return doQuietly(() -> {
             Page page = new Page();
             page.setPageClass(target.getClass());
@@ -54,10 +50,6 @@ public class Steno {
     }
 
     public Scene createScene() {
-        if (story == null) {
-            return null;
-        }
-
         Page page = story.lastPage();
 
         return doQuietly(() -> {
