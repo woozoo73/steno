@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 
 public class StenoDriver implements WebDriver {
 
-
     @Getter
     private final Steno steno;
 
