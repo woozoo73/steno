@@ -1,19 +1,17 @@
 package com.woozooha.steno;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Files;
+import com.woozooha.steno.conf.Config;
 import com.woozooha.steno.model.Element;
 import com.woozooha.steno.model.Page;
 import com.woozooha.steno.model.Scene;
 import com.woozooha.steno.model.Story;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -32,8 +30,12 @@ public class Steno {
     @Getter
     private final WebDriver driver;
 
+    @Getter
+    private final Config config;
+
     public Steno(WebDriver driver) {
         this.driver = driver;
+        this.config = new Config();
     }
 
     public Page createPage(Object target) {
@@ -123,44 +125,28 @@ public class Steno {
         }
     }
 
-    @SneakyThrows
     public void saveStory() {
-        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(story);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, story.getDataFilename());
-        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
-
-        log.info("steno data location: {}", story.getStoryDir());
+        config.getWriter().write(story);
     }
 
-    @SneakyThrows
     private void saveSceneData() {
         Scene scene = story.lastScene();
 
-        String json = Steno.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(scene);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getDataFilename());
-        Files.write(json.getBytes(StandardCharsets.UTF_8), to);
+        config.getWriter().write(story, scene);
     }
 
-    @SneakyThrows
     private void saveScreenshot() {
         Scene scene = story.lastScene();
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
-        File from = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getScreenshotFilename());
-        Files.copy(from, to);
+        config.getWriter().write(story, scene, screenshot);
     }
 
-    @SneakyThrows
     private void saveSource() {
         Scene scene = story.lastScene();
-
         String source = driver.getPageSource();
-        File storyDir = story.getStoryDir();
-        File to = new File(storyDir, scene.getPageSourceFilename());
-        Files.write(source.getBytes(StandardCharsets.UTF_8), to);
+
+        config.getWriter().write(story, scene, source);
     }
 
 }

@@ -1,0 +1,13 @@
+{
+  "id" : 20,
+  "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+  "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+  "title" : "Selenium (software) - Wikipedia",
+  "elements" : [ ],
+  "events" : [ {
+    "type" : "Before",
+    "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+    "methodName" : "quit",
+    "arguments" : null
+  } ]
+}

@@ -40,7 +40,6 @@ public class Story {
 
     public Story() {
         initId();
-        initDirectory();
     }
 
     public Page lastPage() {
@@ -70,16 +69,6 @@ public class Story {
         this.time = TIME_FORMATTER.format(now);
         this.uuid = pseudoUuid();
         this.id = String.format("%s-%s-%s", date, time, uuid);
-    }
-
-    protected void initDirectory() {
-        // TODO: Get from config.
-        File root = new File("/steno-data");
-        dateDir = new File(root, date);
-        storyDir = new File(dateDir, id);
-        if (!storyDir.exists()) {
-            storyDir.mkdirs();
-        }
     }
 
     protected String pseudoUuid() {

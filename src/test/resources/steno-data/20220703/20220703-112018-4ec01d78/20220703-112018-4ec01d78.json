@@ -1,0 +1,689 @@
+{
+  "id" : "20220703-112018-4ec01d78",
+  "pages" : [ {
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "data:,",
+    "title" : "",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 726,
+        "y0" : 471,
+        "x1" : 1120,
+        "y1" : 515
+      },
+      "by" : "By.id: searchInput",
+      "fieldName" : "searchInput"
+    }, {
+      "rect" : {
+        "x0" : 1059,
+        "y0" : 481,
+        "x1" : 1169,
+        "y1" : 505
+      },
+      "by" : "By.id: searchLanguage",
+      "fieldName" : "searchLanguage"
+    }, {
+      "rect" : {
+        "x0" : 1120,
+        "y0" : 471,
+        "x1" : 1176,
+        "y1" : 515
+      },
+      "by" : "By.className: pure-button",
+      "fieldName" : "searchButton"
+    } ]
+  }, {
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 201,
+        "y0" : 100,
+        "x1" : 1879,
+        "y1" : 138
+      },
+      "by" : "By.id: firstHeading",
+      "fieldName" : "firstHeading"
+    }, {
+      "rect" : {
+        "x0" : 201,
+        "y0" : 145,
+        "x1" : 1879,
+        "y1" : 166
+      },
+      "by" : "By.id: siteSub",
+      "fieldName" : "siteSub"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 354,
+        "x1" : 265,
+        "y1" : 375
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[0]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 377,
+        "x1" : 299,
+        "y1" : 398
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[1]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 398,
+        "x1" : 339,
+        "y1" : 419
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[2]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 421,
+        "x1" : 376,
+        "y1" : 442
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[3]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 443,
+        "x1" : 414,
+        "y1" : 464
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[4]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 466,
+        "x1" : 382,
+        "y1" : 487
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[5]"
+    }, {
+      "rect" : {
+        "x0" : 296,
+        "y0" : 487,
+        "x1" : 352,
+        "y1" : 508
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[6]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 509,
+        "x1" : 375,
+        "y1" : 530
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[7]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 531,
+        "x1" : 358,
+        "y1" : 552
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[8]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 554,
+        "x1" : 350,
+        "y1" : 575
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[9]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 576,
+        "x1" : 344,
+        "y1" : 597
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[10]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 599,
+        "x1" : 272,
+        "y1" : 620
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[11]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 622,
+        "x1" : 287,
+        "y1" : 643
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[12]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 644,
+        "x1" : 301,
+        "y1" : 665
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[13]"
+    } ]
+  } ],
+  "scenes" : [ {
+    "id" : 0,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "data:,",
+    "title" : "",
+    "elements" : [ ],
+    "events" : [ ]
+  }, {
+    "id" : 1,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "data:,",
+    "title" : "",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "get",
+      "arguments" : [ "https://www.wikipedia.org" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "get",
+      "arguments" : [ "https://www.wikipedia.org" ]
+    } ]
+  }, {
+    "id" : 2,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 726,
+        "y0" : 471,
+        "x1" : 1120,
+        "y1" : 515
+      },
+      "by" : "By.id: searchInput",
+      "fieldName" : "searchInput"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: searchInput" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: searchInput" ]
+    } ]
+  }, {
+    "id" : 3,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "sendKeys",
+      "arguments" : [ "[Selenium (software)]" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "sendKeys",
+      "arguments" : [ "[Selenium (software)]" ]
+    } ]
+  }, {
+    "id" : 4,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 1059,
+        "y0" : 481,
+        "x1" : 1169,
+        "y1" : 505
+      },
+      "by" : "By.id: searchLanguage",
+      "fieldName" : "searchLanguage"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: searchLanguage" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: searchLanguage" ]
+    } ]
+  }, {
+    "id" : 5,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getTagName",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getTagName",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 6,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getDomAttribute",
+      "arguments" : [ "multiple" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getDomAttribute",
+      "arguments" : [ "multiple" ]
+    } ]
+  }, {
+    "id" : 7,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "findElements",
+      "arguments" : [ "By.xpath: .//option[normalize-space(.) = \"English\"]" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "findElements",
+      "arguments" : [ "By.xpath: .//option[normalize-space(.) = \"English\"]" ]
+    } ]
+  }, {
+    "id" : 8,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "isSelected",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "isSelected",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 9,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "click",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "click",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 10,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 1120,
+        "y0" : 471,
+        "x1" : 1176,
+        "y1" : 515
+      },
+      "by" : "By.className: pure-button",
+      "fieldName" : "searchButton"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.className: pure-button" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.className: pure-button" ]
+    } ]
+  }, {
+    "id" : 11,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.IndexPage",
+    "url" : "https://www.wikipedia.org/",
+    "title" : "Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "submit",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "submit",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 12,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ ]
+  }, {
+    "id" : 13,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 201,
+        "y0" : 100,
+        "x1" : 1879,
+        "y1" : 138
+      },
+      "by" : "By.id: firstHeading",
+      "fieldName" : "firstHeading"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: firstHeading" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: firstHeading" ]
+    } ]
+  }, {
+    "id" : 14,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 15,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 201,
+        "y0" : 145,
+        "x1" : 1879,
+        "y1" : 166
+      },
+      "by" : "By.id: siteSub",
+      "fieldName" : "siteSub"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: siteSub" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElement",
+      "arguments" : [ "By.id: siteSub" ]
+    } ]
+  }, {
+    "id" : 16,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 17,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 354,
+        "x1" : 265,
+        "y1" : 375
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[0]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 377,
+        "x1" : 299,
+        "y1" : 398
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[1]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 398,
+        "x1" : 339,
+        "y1" : 419
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[2]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 421,
+        "x1" : 376,
+        "y1" : 442
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[3]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 443,
+        "x1" : 414,
+        "y1" : 464
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[4]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 466,
+        "x1" : 382,
+        "y1" : 487
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[5]"
+    }, {
+      "rect" : {
+        "x0" : 296,
+        "y0" : 487,
+        "x1" : 352,
+        "y1" : 508
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[6]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 509,
+        "x1" : 375,
+        "y1" : 530
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[7]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 531,
+        "x1" : 358,
+        "y1" : 552
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[8]"
+    }, {
+      "rect" : {
+        "x0" : 333,
+        "y0" : 554,
+        "x1" : 350,
+        "y1" : 575
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[9]"
+    }, {
+      "rect" : {
+        "x0" : 259,
+        "y0" : 576,
+        "x1" : 344,
+        "y1" : 597
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[10]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 599,
+        "x1" : 272,
+        "y1" : 620
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[11]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 622,
+        "x1" : 287,
+        "y1" : 643
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[12]"
+    }, {
+      "rect" : {
+        "x0" : 222,
+        "y0" : 644,
+        "x1" : 301,
+        "y1" : 665
+      },
+      "by" : "By.className: toctext",
+      "fieldName" : "tocTexts[13]"
+    } ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElements",
+      "arguments" : [ "By.className: toctext" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElements",
+      "arguments" : [ "By.className: toctext" ]
+    } ]
+  }, {
+    "id" : 18,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElements",
+      "arguments" : [ "By.className: toctext" ]
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "findElements",
+      "arguments" : [ "By.className: toctext" ]
+    } ]
+  }, {
+    "id" : 19,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    }, {
+      "type" : "After",
+      "targetName" : "org.openqa.selenium.remote.RemoteWebElement",
+      "methodName" : "getText",
+      "arguments" : null
+    } ]
+  }, {
+    "id" : 20,
+    "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+    "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+    "title" : "Selenium (software) - Wikipedia",
+    "elements" : [ ],
+    "events" : [ {
+      "type" : "Before",
+      "targetName" : "org.openqa.selenium.chrome.ChromeDriver",
+      "methodName" : "quit",
+      "arguments" : null
+    } ]
+  } ]
+}

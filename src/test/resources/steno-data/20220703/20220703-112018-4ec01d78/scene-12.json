@@ -1,0 +1,8 @@
+{
+  "id" : 12,
+  "pageClass" : "com.woozooha.steno.example.wikipedia.ResultPage",
+  "url" : "https://en.wikipedia.org/wiki/Selenium_(software)",
+  "title" : "Selenium (software) - Wikipedia",
+  "elements" : [ ],
+  "events" : [ ]
+}

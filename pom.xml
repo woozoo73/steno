@@ -135,6 +135,7 @@
         <junit-platform.version>1.9.0-M1</junit-platform.version>
         <bytebuddy.version>1.12.10</bytebuddy.version>
         <jackson.version>2.13.3</jackson.version>
+        <hamcrest.version>2.2</hamcrest.version>
     </properties>
 
     <dependencies>
@@ -205,6 +206,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
