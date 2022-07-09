@@ -1,19 +1,25 @@
 package com.woozooha.steno.conf;
 
-import com.woozooha.steno.writer.FileHistory;
-import com.woozooha.steno.writer.Reader;
-import com.woozooha.steno.writer.Writer;
+import com.woozooha.steno.history.FileHistory;
+import com.woozooha.steno.history.History;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Config {
 
-    private Writer writer = new FileHistory();
+    private History history;
 
-    private Reader reader = new FileHistory();
+    @Getter
+    @Setter
+    private static Config current = defaultConfig();
+
+    public static Config defaultConfig() {
+        Config config = new Config();
+        config.setHistory(new FileHistory());
+
+        return config;
+    }
 
 }

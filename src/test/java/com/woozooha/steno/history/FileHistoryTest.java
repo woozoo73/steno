@@ -1,4 +1,4 @@
-package com.woozooha.steno.writer;
+package com.woozooha.steno.history;
 
 import com.woozooha.steno.model.Story;
 import com.woozooha.steno.model.StoryExample;
@@ -42,11 +42,9 @@ class FileHistoryTest {
 
     String getStenoDataDir() {
         String path = "src/test/resources/steno-data";
-
         File file = new File(path);
-        String stenoDir = file.getAbsolutePath();
 
-        return stenoDir;
+        return file.getAbsolutePath();
     }
 
 }

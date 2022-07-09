@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,11 +27,6 @@ public class Story {
     private String time;
     @JsonIgnore
     private String uuid;
-
-    @JsonIgnore
-    private File dateDir;
-    @JsonIgnore
-    private File storyDir;
 
     private List<Page> pages = new ArrayList<>();
 

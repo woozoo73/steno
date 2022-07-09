@@ -1,4 +1,4 @@
-package com.woozooha.steno.writer;
+package com.woozooha.steno.history;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
@@ -16,35 +16,32 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class FileHistory implements Writer, Reader {
+public class FileHistory implements History {
 
     @Getter
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    private static final String DEFAULT_STENO_DIR = "/steno-data";
+
     private final String stenoDataDir;
 
-    private File root;
-
     public FileHistory() {
-        this("/steno-data");
+        this(DEFAULT_STENO_DIR);
     }
 
     public FileHistory(String stenoDataDir) {
         this.stenoDataDir = stenoDataDir;
-        initRootDirectory();
     }
 
     @Override
     public void write(Story story) {
         try {
-            initDateDirectory(story);
-
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(story);
-            File storyDir = story.getStoryDir();
+            File storyDir = getDirectory(story, true);
             File to = new File(storyDir, story.getDataFilename());
             Files.write(json.getBytes(StandardCharsets.UTF_8), to);
 
-            log.info("steno data location: {}", story.getStoryDir());
+            log.info("steno data location: {}", getDirectory(story));
         } catch (Throwable t) {
             log.warn(t.getMessage(), t);
         }
@@ -53,10 +50,8 @@ public class FileHistory implements Writer, Reader {
     @Override
     public void write(Story story, Scene scene) {
         try {
-            initDateDirectory(story);
-
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(scene);
-            File storyDir = story.getStoryDir();
+            File storyDir = getDirectory(story, true);
             File to = new File(storyDir, scene.getDataFilename());
             Files.write(json.getBytes(StandardCharsets.UTF_8), to);
         } catch (Throwable t) {
@@ -67,9 +62,7 @@ public class FileHistory implements Writer, Reader {
     @Override
     public void write(Story story, Scene scene, File screenshot) {
         try {
-            initDateDirectory(story);
-
-            File storyDir = story.getStoryDir();
+            File storyDir = getDirectory(story, true);
             File to = new File(storyDir, scene.getScreenshotFilename());
             Files.copy(screenshot, to);
         } catch (Throwable t) {
@@ -80,9 +73,7 @@ public class FileHistory implements Writer, Reader {
     @Override
     public void write(Story story, Scene scene, String source) {
         try {
-            initDateDirectory(story);
-
-            File storyDir = story.getStoryDir();
+            File storyDir = getDirectory(story, true);
             File to = new File(storyDir, scene.getPageSourceFilename());
             Files.write(source.getBytes(StandardCharsets.UTF_8), to);
         } catch (Throwable t) {
@@ -90,65 +81,17 @@ public class FileHistory implements Writer, Reader {
         }
     }
 
-    protected void initRootDirectory() {
-        try {
-            this.root = new File(stenoDataDir);
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-        } catch (Throwable t) {
-            log.warn(t.getMessage(), t);
-        }
-    }
-
-    protected File getStoryDir(Story story) {
-        return getStoryDir(story.getDate(), story.getId());
-    }
-
-    protected File getDateDir(String date) {
-        try {
-            File dateDir = new File(root, date);
-
-            return dateDir;
-        } catch (Throwable t) {
-            log.warn(t.getMessage(), t);
-        }
-
-        return null;
-    }
-
-    protected File getStoryDir(String date, String id) {
-        try {
-            File dateDir = new File(root, date);
-            File storyDir = new File(dateDir, id);
-
-            return storyDir;
-        } catch (Throwable t) {
-            log.warn(t.getMessage(), t);
-        }
-
-        return null;
-    }
-
-    protected void initDateDirectory(Story story) {
-        try {
-            File storyDir = getStoryDir(story);
-            if (!storyDir.exists()) {
-                storyDir.mkdirs();
-            }
-        } catch (Throwable t) {
-            log.warn(t.getMessage(), t);
-        }
-    }
-
     @Override
     public List<Story> getStoryList(StoryExample example) {
-        File dateDir = getDateDir(example.getDate());
+        File dateDir = getDateDirectory(example.getDate());
         if (!dateDir.exists()) {
             return Collections.emptyList();
         }
 
         File[] files = dateDir.listFiles();
+        if (files == null) {
+            return Collections.emptyList();
+        }
         Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
 
         return Arrays.stream(files)
@@ -185,6 +128,40 @@ public class FileHistory implements Writer, Reader {
         }
 
         return null;
+    }
+
+    protected File getRootDirectory(boolean create) {
+        File root = new File(stenoDataDir);
+        if (!root.exists() && create) {
+            root.mkdirs();
+        }
+
+        return root;
+    }
+
+    protected File getDateDirectory(String date) {
+        return new File(stenoDataDir, date);
+    }
+
+    protected File getDirectory(Story story) {
+        return getDirectory(story, false);
+    }
+
+    protected File getDirectory(Story story, boolean create) {
+        File root = getRootDirectory(create);
+        File dateDir = new File(root, story.getDate());
+        File storyDir = new File(dateDir, story.getId());
+        if (!storyDir.exists() && create) {
+            storyDir.mkdirs();
+        }
+
+        return storyDir;
+    }
+
+    protected File getStoryDir(String date, String id) {
+        File dateDir = new File(stenoDataDir, date);
+
+        return new File(dateDir, id);
     }
 
 }

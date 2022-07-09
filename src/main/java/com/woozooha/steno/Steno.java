@@ -35,7 +35,7 @@ public class Steno {
 
     public Steno(WebDriver driver) {
         this.driver = driver;
-        this.config = new Config();
+        this.config = Config.getCurrent();
     }
 
     public Page createPage(Object target) {
@@ -126,27 +126,27 @@ public class Steno {
     }
 
     public void saveStory() {
-        config.getWriter().write(story);
+        config.getHistory().write(story);
     }
 
     private void saveSceneData() {
         Scene scene = story.lastScene();
 
-        config.getWriter().write(story, scene);
+        config.getHistory().write(story, scene);
     }
 
     private void saveScreenshot() {
         Scene scene = story.lastScene();
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
-        config.getWriter().write(story, scene, screenshot);
+        config.getHistory().write(story, scene, screenshot);
     }
 
     private void saveSource() {
         Scene scene = story.lastScene();
         String source = driver.getPageSource();
 
-        config.getWriter().write(story, scene, source);
+        config.getHistory().write(story, scene, source);
     }
 
 }
