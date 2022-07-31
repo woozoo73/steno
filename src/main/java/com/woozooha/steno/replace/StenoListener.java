@@ -23,8 +23,8 @@ public class StenoListener implements WebDriverListener {
     @Getter
     private final Steno steno;
 
-    public StenoListener(WebDriver driver) {
-        steno = new Steno(driver);
+    public StenoListener(WebDriver driver, Class<?> targetClass) {
+        steno = new Steno(driver, targetClass);
     }
 
     public void beforeAnyCall(Object target, Method method, Object[] args) {

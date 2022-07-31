@@ -91,7 +91,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         Object target = readTarget(extensionContext);
 
         WebDriver driver = createWebDriver(target);
-        StenoListener listener = new StenoListener(driver);
+        Class<?> targetClass = target.getClass();
+        StenoListener listener = new StenoListener(driver, targetClass);
         WebDriver decorated = addStenoListener(driver, listener);
         StenoDriver stenoDriver = new StenoDriver(listener.getSteno(), decorated);
         bindWebDriver(target, stenoDriver);

@@ -21,6 +21,8 @@ public class Story {
 
     private String id;
 
+    private Class<?> targetClass;
+
     @JsonIgnore
     private String date;
     @JsonIgnore

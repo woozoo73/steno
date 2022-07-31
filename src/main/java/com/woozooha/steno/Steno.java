@@ -19,6 +19,10 @@ public class Steno {
 
     @Getter
     @Setter
+    private Class<?> targetClass;
+
+    @Getter
+    @Setter
     private boolean listen = true;
 
     @Getter
@@ -33,8 +37,10 @@ public class Steno {
     @Getter
     private final Config config;
 
-    public Steno(WebDriver driver) {
+    public Steno(WebDriver driver, Class<?> targetClass) {
         this.driver = driver;
+        this.targetClass = targetClass;
+        this.story.setTargetClass(targetClass);
         this.config = Config.getCurrent();
     }
 
