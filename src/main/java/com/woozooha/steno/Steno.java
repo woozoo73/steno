@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -19,7 +20,15 @@ public class Steno {
 
     @Getter
     @Setter
+    private String groupId;
+
+    @Getter
+    @Setter
     private Class<?> targetClass;
+
+    @Getter
+    @Setter
+    private Method targetMethod;
 
     @Getter
     @Setter
@@ -29,7 +38,7 @@ public class Steno {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Getter
-    private final Story story = new Story();
+    private final Story story;
 
     @Getter
     private final WebDriver driver;
@@ -37,10 +46,12 @@ public class Steno {
     @Getter
     private final Config config;
 
-    public Steno(WebDriver driver, Class<?> targetClass) {
+    public Steno(WebDriver driver, String groupId, Class<?> targetClass, Method targetMethod) {
         this.driver = driver;
+        this.groupId = groupId;
         this.targetClass = targetClass;
-        this.story.setTargetClass(targetClass);
+        this.targetMethod = targetMethod;
+        this.story = new Story(groupId, targetClass, targetMethod);
         this.config = Config.getCurrent();
     }
 

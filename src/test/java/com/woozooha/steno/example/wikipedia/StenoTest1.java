@@ -44,4 +44,19 @@ class StenoTest1 {
         log.info("tocs[0]={}", tocs0);
     }
 
+    @Test
+    void search2() {
+        IndexPage indexPage = PageFactory.initElements(driver, IndexPage.class);
+        indexPage.index();
+        ResultPage resultPage = indexPage.search("Steno");
+
+        String firstHeading = resultPage.getFirstHeading();
+        String siteSub = resultPage.getSiteSub();
+        String tocs0 = resultPage.getTocs(0);
+
+        log.info("firstHeading={}", firstHeading);
+        log.info("siteSub={}", siteSub);
+        log.info("tocs[0]={}", tocs0);
+    }
+
 }

@@ -15,9 +15,12 @@ import org.openqa.selenium.support.events.WebDriverListener;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 public class StenoExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+
+    private String groupId;
 
     private Steno steno;
 
@@ -31,6 +34,7 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
         }
 
         ContextUtils.replacePageFactory();
+        groupId = generateGroupId();
     }
 
     @Override
@@ -92,7 +96,8 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
 
         WebDriver driver = createWebDriver(target);
         Class<?> targetClass = target.getClass();
-        StenoListener listener = new StenoListener(driver, targetClass);
+        Method targetMethod = extensionContext.getTestMethod().orElse(null);
+        StenoListener listener = new StenoListener(driver, groupId, targetClass, targetMethod);
         WebDriver decorated = addStenoListener(driver, listener);
         StenoDriver stenoDriver = new StenoDriver(listener.getSteno(), decorated);
         bindWebDriver(target, stenoDriver);
@@ -204,6 +209,14 @@ public class StenoExtension implements BeforeAllCallback, AfterAllCallback, Befo
 
     protected WebDriver addStenoListener(WebDriver driver, WebDriverListener listener) {
         return new EventFiringDecorator(listener).decorate(driver);
+    }
+
+    public String generateGroupId() {
+        return pseudoUuid();
+    }
+
+    protected String pseudoUuid() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 
 }

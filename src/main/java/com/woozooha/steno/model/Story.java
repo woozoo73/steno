@@ -2,8 +2,10 @@ package com.woozooha.steno.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Story {
 
     private static final String DATE_PATTERN = "yyyyMMdd";
@@ -21,7 +24,11 @@ public class Story {
 
     private String id;
 
+    private String groupId;
+
     private Class<?> targetClass;
+
+    private Method targetMethod;
 
     @JsonIgnore
     private String date;
@@ -34,7 +41,11 @@ public class Story {
 
     private List<Scene> scenes = new ArrayList<>();
 
-    public Story() {
+    public Story(String groupId, Class<?> targetClass, Method targetMethod) {
+        this.groupId = groupId;
+        this.targetClass = targetClass;
+        this.targetMethod = targetMethod;
+
         initId();
     }
 
@@ -64,7 +75,9 @@ public class Story {
         this.date = DATE_FORMATTER.format(now);
         this.time = TIME_FORMATTER.format(now);
         this.uuid = pseudoUuid();
-        this.id = String.format("%s-%s-%s", date, time, uuid);
+        String simpleClassName = targetClass == null ? "null" : targetClass.getSimpleName();
+        String methodName = targetMethod == null ? "null" : targetMethod.getName();
+        this.id = String.format("%s-%s-%s-%s-%s-%s", groupId, simpleClassName, methodName, date, time, uuid);
     }
 
     protected String pseudoUuid() {
