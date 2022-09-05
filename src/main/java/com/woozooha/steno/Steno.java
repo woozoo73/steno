@@ -102,21 +102,16 @@ public class Steno {
 
             Page page = story.lastPage();
             if (page != null) {
-                if (fieldName != null) {
-                    boolean alreadyAdded = page.getElements().stream()
-                            .filter(e -> fieldName.equals(e.getFieldName()))
-                            .map(e -> Boolean.TRUE).findFirst().orElse(Boolean.FALSE);
-                    if (alreadyAdded) {
-                        return element;
-                    }
+                if (!page.getElements().contains(element)) {
+                    page.getElements().add(element);
                 }
-
-                page.getElements().add(element);
             }
 
             Scene scene = story.lastScene();
             if (scene != null) {
-                scene.getElements().add(element);
+                if (!scene.getElements().contains(element)) {
+                    scene.getElements().add(element);
+                }
             }
 
             return element;

@@ -1,13 +1,11 @@
 package com.woozooha.steno.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.openqa.selenium.Rectangle;
 
 @Getter
 @Setter
+@EqualsAndHashCode(exclude = "rect")
 public class Element {
 
     private Rect rect;
